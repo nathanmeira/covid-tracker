@@ -1,0 +1,196 @@
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Associados</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    </head>
+    
+    <body>
+        <h1>Gerenciamento de Associados</h1>
+
+        <table>    
+            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
+            <tr> <td>CPF:</td> <td><input type="text" id="txtCpf"></td> </tr>           
+            <tr><td></td><td>
+                <input type="button" value="Novo" onclick="novoAssociado()" id="btnNovo">
+                <input type="button" value="Salvar" onclick="salvarAssociado()" id="btnSalvar">
+                <input type="button" value="Apagar" onclick="apagarAssociado()" id="btnApagar">
+                <input type="button" value="Cancelar" onclick="cancelarEdicao()" id="btnCancelar">
+            </td></tr>
+        </table> 
+        
+		<p style="font-weight:bold" id="paragrafoMensagem"></p>
+		
+        <table>    
+            <tr> <th>ID</th> <th>Nome</th> <th>CPF</th></tr>
+            <tbody id="corpoTabelaAssociado"> </tbody>
+        </table>
+        
+	    <script>
+	        const corpoTabela = document.querySelector('#corpoTabelaAssociado');
+	        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+	        
+	        const txtId = document.querySelector('#txtId');
+	        const txtNome = document.querySelector('#txtNome');
+	        const txtCpf = document.querySelector('#txtCpf');	       
+	        
+	        const btnNovo = document.querySelector('#btnNovo');
+	        const btnSalvar = document.querySelector('#btnSalvar');
+	        const btnApagar = document.querySelector('#btnApagar');
+	        const btnCancelar = document.querySelector('#btnCancelar');
+	        
+	        var criandoNovoAssociado = false;
+	        
+	        inicializar();
+
+	        function inicializar() {
+	        	criandoNovoAssociado = false;
+	            paragrafoMensagem.innerHTML = 'Pressione o botão Novo ou selecione um associado da lista:'
+	            
+            	txtId.value = '';
+	            txtNome.value = '';
+	            txtCpf.value = '';
+	            
+	            txtId.disabled = true;
+	            txtNome.disabled = true;
+	            txtCpf.disabled = true;
+	            
+	            btnNovo.disabled = false;
+	            btnSalvar.disabled = true;
+	            btnApagar.disabled = true;
+	            btnCancelar.disabled = true;
+	            
+	            listarTodosAssociados();            
+	        }
+
+	        async function listarTodosAssociados() {
+	            const URL = `/api/associados`;
+	            fetch(URL)
+	              .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+	              .then(resposta => resposta.json())
+	              .then(jsonResponse => preencherTabela(jsonResponse))
+	              .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao listar associados (código " + error.message + ")";});
+	        }
+	        
+	        function preencherTabela( associados ) {
+	            var linhasTabela = '';
+	            var n = associados.length;
+	            for (var i = 0; i < n; i++) {
+	                var asso = associados[i];
+	                linhasTabela += 
+	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarAssociado('${asso.cod_ass}','${asso.nome}','${asso.cpf}')">` 
+	                    + asso.cod_ass     + '</a></td>' + 
+	                    '<td>' + asso.nome   + '</td>' +
+	                    '<td>' + asso.cpf   + '</td></tr>\n';
+	            }
+	            corpoTabela.innerHTML = linhasTabela;
+	        }
+	        
+	        function selecionarAssociado(id, nome, cpf) {
+	        	criandoNovoAssociado = false;
+	        	
+	            paragrafoMensagem.innerHTML = 'Altere e salve os dados do associado, ou então apague o registro do associado.'
+	            txtId.value = id;
+	            txtNome.value = nome;
+	            txtCpf.value = cpf;
+	            
+	            txtId.disabled = true;
+	            txtNome.disabled = false;
+	            txtCpf.disabled = false;	            
+	           
+	            btnNovo.disabled = true;
+	            btnSalvar.disabled = false;
+	            btnApagar.disabled = false;
+	            btnCancelar.disabled = false;  
+	        }
+
+	        function novoAssociado() {
+	        	paragrafoMensagem.innerHTML = 'Preencha os dados do novo associado...';
+	        	criandoNovoAssociado = true;
+	        	
+	        	txtId.value = '';
+	        	txtNome.value = '';
+	        	txtCpf.value = '';
+	        	
+	        	txtId.disabled = true;
+	        	txtNome.disabled = false;
+	        	txtCpf.disabled = false;
+	        	
+	        	btnNovo.disabled = true;
+	        	btnSalvar.disabled = false;
+	        	btnApagar.disabled = true;
+	        	btnCancelar.disabled = false;
+	        }
+	        
+	        function salvarAssociado() {
+	        	if (criandoNovoAssociado) {
+	        		criarAssociado();
+	        	}
+	        	else {
+	        		alterarAssociado();
+	        	}
+	        }
+	        
+	        async function criarAssociado() {
+	        	const URL = `/api/associados`;
+	        	const dadosAssociado = {
+	        		'nome': txtNome.value,
+	        		'cpf': txtCpf.value
+	        	};
+	        	const postRequest = {
+	        		method: 'POST',
+	        		body: JSON.stringify(dadosAssociado),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, postRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao criar novo associado (código ' + error.message + ')'; } );
+	        }
+	        
+	        async function alterarAssociado() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/associados/${ID}`;
+	        	const dadosAssociado = {
+	        		'cod_ass': ID,
+	        		'nome': txtNome.value,
+	        		'cpf': txtCpf.value
+	        	};
+	        	const putRequest = {
+	        		method: 'PUT',
+	        		body: JSON.stringify(dadosAssociado),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, putRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao alterar associado (código ' + error.message + ')'; } );	        	
+	        }
+	        
+	        function cancelarEdicao() {
+	        	inicializar();
+	        }
+	        
+	        async function apagarAssociado() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/associados/${ID}`;
+	        	const deleteRequest = {
+	        		method: 'DELETE'
+	        	};
+	        	fetch(URL, deleteRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao apagar associado (código ' + error.message + ')'; } );	        		
+	        }
+	        
+	    </script>    
+    </body>
+    
+    </html>
+
+    

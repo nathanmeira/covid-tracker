@@ -1,0 +1,247 @@
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Exemplares</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    </head>
+    
+    <body>
+        <h1>Gerenciamento de Exemplares</h1>
+
+        <table>    
+            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr> <td>Numero:</td> <td><input type="text" id="txtNumero"></td> </tr>
+            <tr> <td>Fileira:</td> <td><input type="text" id="txtFileira"></td> </tr>  
+            <tr> <td>Prateleira:</td> <td><input type="text" id="txtPrateleira"></td> </tr>       
+            <tr> <td>Status:</td> <td><input type="text" id="txtStatus"></td> </tr>   
+            <tr> <td>Livro:</td> <td><select id="selectLivro"></select></td> </tr>        
+            <tr><td></td><td>
+                <input type="button" value="Novo" onclick="novoExemplar()" id="btnNovo">
+                <input type="button" value="Salvar" onclick="salvarExemplar()" id="btnSalvar">
+                <input type="button" value="Apagar" onclick="apagarExemplar()" id="btnApagar">
+                <input type="button" value="Cancelar" onclick="cancelarEdicao()" id="btnCancelar">
+            </td></tr>
+        </table> 
+        
+		<p style="font-weight:bold" id="paragrafoMensagem"></p>
+		
+        <table>    
+            <tr> <th>ID</th> <th>Numero</th> <th>Fileira</th><th>Prateleira</th><th>Status</th><th>Nome Livro</th></tr>
+            <tbody id="corpoTabelaExemplar"> </tbody>
+        </table>
+        
+	    <script>
+	        const corpoTabela = document.querySelector('#corpoTabelaExemplar');
+	        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+	        
+	        const txtId = document.querySelector('#txtId');
+	        const txtNumero = document.querySelector('#txtNumero');
+	        const txtFileira = document.querySelector('#txtFileira');	 
+	        const txtPrateleira = document.querySelector('#txtPrateleira');	
+	        const txtStatus = document.querySelector('#txtStatus');
+	        const selectLivro = document.querySelector('#selectLivro');
+	        
+	        const btnNovo = document.querySelector('#btnNovo');
+	        const btnSalvar = document.querySelector('#btnSalvar');
+	        const btnApagar = document.querySelector('#btnApagar');
+	        const btnCancelar = document.querySelector('#btnCancelar');
+	        
+	        var criandoNovoExemplar = false;
+	        
+	        inicializar();
+
+	        function inicializar() {
+	        	criandoNovoExemplar = false;
+	            paragrafoMensagem.innerHTML = 'Pressione o botão Novo ou selecione um exemplar da lista:'
+	            
+            	txtId.value = '';
+	            txtNumero.value = '';
+	            txtFileira.value = '';
+	            txtPrateleira.value = '';
+	            txtStatus.value = '';
+	            
+	            txtId.disabled = true;
+	            txtNumero.disabled = true;
+	            txtFileira.disabled = true;
+	            txtPrateleira.disabled = true;
+	            txtStatus.disabled = true;
+	            selectLivro.disabled = true;
+	            
+	            btnNovo.disabled = false;
+	            btnSalvar.disabled = true;
+	            btnApagar.disabled = true;
+	            btnCancelar.disabled = true;
+	            
+	            listarTodosExemplares();  
+	            carregarLivro();
+	        }
+
+	        async function listarTodosExemplares() {
+	            const URL = `/api/exemplares`;
+	            fetch(URL)
+	              .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+	              .then(resposta => resposta.json())
+	              .then(jsonResponse => preencherTabela(jsonResponse))
+	              .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao listar exemplares (código " + error.message + ")";});
+	        }
+	        
+	        async function carregarLivro() {
+                const URL = `/api/livros`;
+                fetch(URL)
+                  .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+                  .then(resposta => resposta.json())
+                  .then(jsonResponse => preencherSelectLivros(jsonResponse))
+                  .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao carregar livros (código " + error.message + ")";});
+            }
+	        
+	        function preencherSelectLivros(livros) {
+                var opcoes = '';
+                var n = livros.length;
+                for (var i = 0; i < n; i++) {
+                    var l = livros[i];
+                    opcoes += `<option value="${l.id_livro}">${l.titulo}</option>`
+                }
+                selectLivro.innerHTML = opcoes;
+            }
+	        
+	        function preencherTabela( exemplares ) {
+	            var linhasTabela = '';
+	            var n = exemplares.length;
+	            for (var i = 0; i < n; i++) {
+	                var e = exemplares[i];
+	                linhasTabela += 
+	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarExemplar('${e.id_exemplar}','${e.numero}','${e.fileira}','${e.prateleira}','${e.status}', '${e.livro.id_livro}')">` 
+	                    + e.id_exemplar     + '</a></td>' + 
+	                    '<td>' + e.numero   + '</td>' +
+	                    '<td>' + e.fileira   + '</td>' +
+	                    '<td>' + e.prateleira   + '</td>' +
+	                    '<td>' + e.status   + '</td>' +
+	                    '<td>' + e.livro.titulo   + '</td></tr>\n';
+	            }
+	            corpoTabela.innerHTML = linhasTabela;
+	        }
+	        
+	        function selecionarExemplar(id, numero, fileira, prateleira, status, id_livro) {
+	        	criandoNovoExemplar = false;
+	        	
+	            paragrafoMensagem.innerHTML = 'Altere e salve os dados do exemplar, ou então apague o registro do exemplar.'
+	            
+            	txtId.value = id;
+	            txtNumero.value = numero;
+	            txtFileira.value = fileira;
+	            txtPrateleira.value = prateleira;
+	            txtStatus.value = status;
+	            selectLivro.value = id_livro;
+	            	
+	            txtId.disabled = true;
+	            txtNumero.disabled = false;
+	            txtFileira.disabled = false;
+	            txtPrateleira.disabled = false;
+	            txtStatus.disabled = false;
+	            selectLivro.disabled = false;
+	            
+	            btnNovo.disabled = true;
+	            btnSalvar.disabled = false;
+	            btnApagar.disabled = false;
+	            btnCancelar.disabled = false;  
+	        }
+
+	        function novoExemplar() {
+	        	paragrafoMensagem.innerHTML = 'Preencha os dados do novo exemplar...';
+	        	criandoNovoExemplar = true;
+	        	
+	        	txtId.value = '';
+	            txtNumero.value = '';
+	            txtFileira.value = '';
+	            txtPrateleira.value = '';
+	            txtStatus.value = '';
+	            
+	            txtId.disabled = true;
+	            txtNumero.disabled = false;
+	            txtFileira.disabled = false;
+	            txtPrateleira.disabled = false;
+	            txtStatus.disabled = false;
+	            selectLivro.disabled = false;
+	            
+	        	btnNovo.disabled = true;
+	        	btnSalvar.disabled = false;
+	        	btnApagar.disabled = true;
+	        	btnCancelar.disabled = false;
+	        }
+	        
+	        function salvarExemplar() {
+	        	if (criandoNovoExemplar) {
+	        		criarExemplar();
+	        	}
+	        	else {
+	        		alterarExemplar();
+	        	}
+	        }
+	        
+	        async function criarExemplar() {
+	        	
+	        	const URL = `api/livros/${selectLivro.value}/exemplares`;
+	        	const dadosExemplar = {
+	        		'numero': txtNumero.value,
+	        		'fileira': txtFileira.value,
+	        		'prateleira': txtPrateleira.value,
+	        		'status': txtStatus.value
+	        	};
+	        	const postRequest = {
+	        		method: 'POST',
+	        		body: JSON.stringify(dadosExemplar),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, postRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao criar novo exemplar (código ' + error.message + ')'; } );
+	        }
+	        
+	        async function alterarExemplar() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/livros/${selectLivro.value}/exemplares/${ID}`;
+	        	const dadosExemplar = {
+	        		'id_exemplar': ID,
+        			'numero': txtNumero.value,
+	        		'fileira': txtFileira.value,
+	        		'prateleira': txtPrateleira.value,
+	        		'status': txtStatus.value
+	        	};
+	        	const putRequest = {
+	        		method: 'PUT',
+	        		body: JSON.stringify(dadosExemplar),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, putRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao alterar exemplar (código ' + error.message + ')'; } );	        	
+	        }
+	        
+	        function cancelarEdicao() {
+	        	inicializar();
+	        }
+	        
+	        async function apagarExemplar() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/exemplares/${ID}`;
+	        	const deleteRequest = {
+	        		method: 'DELETE'
+	        	};
+	        	fetch(URL, deleteRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao apagar exemplar (código ' + error.message + ')'; } );	        		
+	        }
+	        
+	    </script>    
+    </body>
+    
+    </html>
+
+    
