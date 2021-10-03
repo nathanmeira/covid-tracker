@@ -1,11 +1,13 @@
 package wsrest;
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UsuarioController {
@@ -34,7 +36,6 @@ public class UsuarioController {
 
     @PostMapping("/api/usuarios")
     public Usuario createAssociado(@RequestBody Usuario usuario) {
-        // Long jaca = 10L;
         Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());;
         if (!optionTipoUsuario.isPresent()) {
             return null;
@@ -43,6 +44,26 @@ public class UsuarioController {
         usuario.setTipoUsuario(l);
     	usuarioRepo.save(usuario);
         return usuario;
+    }
+    
+    @PostMapping("/api/usuarios/csv")
+    public ArrayList<Usuario> createAssociado(@RequestParam("file") MultipartFile file) {
+        try {
+            LerCSV csv = new LerCSV();
+            ArrayList<Usuario> usuarios =  csv.lerUsuario(file.getInputStream());
+            for (Usuario u : usuarios) {
+                Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(u.getIdTipoUsuario());
+                if (!optionTipoUsuario.isPresent()) {
+                    continue;
+                }
+                TipoUsuario l = optionTipoUsuario.get();
+                u.setTipoUsuario(l);
+                usuarioRepo.save(u);
+            }
+            return usuarios;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
     }
 
     @PutMapping("/api/usuarios/{id}")
