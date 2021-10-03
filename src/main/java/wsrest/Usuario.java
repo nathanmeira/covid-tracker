@@ -1,8 +1,10 @@
 package wsrest;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,25 +14,29 @@ public class Usuario {
 	@Id @GeneratedValue
 	private long id;
 	private String nome;
-	private String setor;
-	private String tipo;
+	private String setor;        
 	private String senha;
 	private String dataNasc;
 	private String cidade;
-	private String estado;
+	private String estado; 
+        private Long id_tipo_usuario; 
+        
+        @ManyToOne(fetch=FetchType.EAGER,optional=false)
+	private TipoUsuario tipoUsuario;
+        
 	public Usuario() {
 
 	}
 
-	public Usuario(long id, String nome, String setor, String tipo, String senha, String dataNasc, String cidade, String estado) {
+	public Usuario(long id, String nome, String setor, String senha, String dataNasc, String cidade, String estado, Long id_tipo_usuario) {
 		this.id = id;
 		this.nome = nome;
-		this.tipo = tipo;
 		this.setor = setor;
 		this.senha = senha;
 		this.dataNasc = dataNasc;
 		this.cidade = cidade;
 		this.estado = estado;
+                this.id_tipo_usuario = id_tipo_usuario;
 	}
 
 	public long getId() {
@@ -49,12 +55,20 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setTipoUsuario(TipoUsuario tipo) {
+		this.tipoUsuario = tipo;
+	}
+        
+        public Long getIdTipoUsuario() {
+		return id_tipo_usuario;
+	}
+
+	public void setIdTipoUsuario(Long id) {
+		this.id_tipo_usuario = id;
 	}
 
 	public String getSetor() {

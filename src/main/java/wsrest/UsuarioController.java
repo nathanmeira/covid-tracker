@@ -11,6 +11,9 @@ import java.util.Optional;
 public class UsuarioController {
 	@Autowired
 	private UsuarioRepo usuarioRepo;
+        
+        @Autowired
+        private TipoUsuarioRepo tipoUsuarioRepo;
 	
 	@GetMapping("/api/usuarios")
 	public List<Usuario> getUsuarios(){
@@ -31,6 +34,13 @@ public class UsuarioController {
 
     @PostMapping("/api/usuarios")
     public Usuario createAssociado(@RequestBody Usuario usuario) {
+        // Long jaca = 10L;
+        Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());;
+        if (!optionTipoUsuario.isPresent()) {
+            return null;
+        }
+        TipoUsuario l = optionTipoUsuario.get();
+        usuario.setTipoUsuario(l);
     	usuarioRepo.save(usuario);
         return usuario;
     }
@@ -40,8 +50,8 @@ public class UsuarioController {
         Usuario usuario = null;
     	usuario = this.getUsuario(id);
         if(usuario != null) {
-        	usuarioRepo.save(a);
-        	usuario = a;
+            usuarioRepo.save(a);
+            usuario = a;
         }
         return a;
     }
