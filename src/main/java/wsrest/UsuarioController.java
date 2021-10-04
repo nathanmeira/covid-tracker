@@ -35,19 +35,20 @@ public class UsuarioController {
     }
 
     @PostMapping("/api/usuarios")
-    public Usuario createAssociado(@RequestBody Usuario usuario) {
+    public Usuario createUsuario(@RequestBody Usuario usuario) {
         Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());;
         if (!optionTipoUsuario.isPresent()) {
             return null;
         }
         TipoUsuario l = optionTipoUsuario.get();
         usuario.setTipoUsuario(l);
+        usuario.setSenha(usuario.getMatricula() + "");
     	usuarioRepo.save(usuario);
         return usuario;
     }
     
     @PostMapping("/api/usuarios/csv")
-    public ArrayList<Usuario> createAssociado(@RequestParam("file") MultipartFile file) {
+    public ArrayList<Usuario> createUsuario(@RequestParam("file") MultipartFile file) {
         try {
             LerCSV csv = new LerCSV();
             ArrayList<Usuario> usuarios =  csv.lerUsuario(file.getInputStream());
@@ -58,12 +59,23 @@ public class UsuarioController {
                 }
                 TipoUsuario l = optionTipoUsuario.get();
                 u.setTipoUsuario(l);
+                u.setSenha(u.getMatricula() + "");
                 usuarioRepo.save(u);
             }
             return usuarios;
         } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());
         }
+    }
+    
+    @PostMapping("/api/usuarios/logar")
+    public Usuario logar(@RequestBody Usuario usuario) {
+        Optional<Usuario> optionUsu = usuarioRepo.logar(usuario.getMatricula(), usuario.getSenha());
+        Usuario usuEncontrado = null;
+        if(optionUsu.isPresent()) {
+            usuEncontrado = optionUsu.get();
+        }
+        return usuEncontrado;
     }
 
     @PutMapping("/api/usuarios/{id}")
