@@ -1,5 +1,6 @@
 package wsrest;
 
+import com.fasterxml.jackson.databind.ser.impl.ObjectIdWriter;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,25 +36,33 @@ public class UsuarioController {
     }
 
     @PostMapping("/api/usuarios")
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        Optional<Usuario> optionUsu = usuarioRepo.findByMatricula(usuario.getMatricula());
-        if(optionUsu.isPresent()){
-            return optionUsu.get();
-        }
-        
+    public String createUsuario(@RequestBody Usuario usuario) {
         Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());
         if (!optionTipoUsuario.isPresent()) {
-            return null;
+            return (
+               "{ \"success\": false, \"usuario_id\": 0, \"usuario_tipo_id\": 0 }" 
+            );
         }
+        Optional<Usuario> optionUsu = usuarioRepo.findByMatricula(usuario.getMatricula());
+      
+        if(optionUsu.isPresent()){
+            Usuario u = optionUsu.get();
+            return (
+               "{ \"success\": false, \"usuario_id\": "+ u.getId() +", \"usuario_tipo_id\": "+ u.getIdTipoUsuario()+ " }"
+            );
+        }        
+        
         TipoUsuario l = optionTipoUsuario.get();
         usuario.setTipoUsuario(l);
         usuario.setSenha(usuario.getMatricula() + "");
     	usuarioRepo.save(usuario);
-        return usuario;
+        return (
+            "{ \"success\": true, \"usuario_id\": "+ usuario.getId() +", \"usuario_tipo_id\": "+ usuario.getIdTipoUsuario()+ " }"
+        );
     }
     
     @PostMapping("/api/usuarios/csv")
-    public ArrayList<Usuario> createUsuario(@RequestParam("file") MultipartFile file) {
+    public ArrayList<Usuario> createUsuario(@RequestParam("file") MultipartFile file) {        
         try {
             LerCSV csv = new LerCSV();
             ArrayList<Usuario> usuarios =  csv.lerUsuario(file.getInputStream());
