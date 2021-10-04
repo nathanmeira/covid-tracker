@@ -45,13 +45,13 @@ public class LerCSV {
                 
                 listUsuarios.add(new Usuario(
                     0L,
-                    dados[0], 
-                    dados[1], 
+                    dados[0].replace("\"", "").trim(), 
+                    dados[1].replace("\"", "").trim(), 
                     "", 
-                    dados[2], 
-                    dados[3], 
-                    dados[4], 
-                    Long.parseLong(dados[5]), 
+                    dados[2].replace("\"", "").trim(), 
+                    dados[3].replace("\"", "").trim(), 
+                    dados[4].replace("\"", "").trim(), 
+                    Long.parseLong(dados[5].replace("\"", "").trim()), 
                     matricula
                 ));
             }
