@@ -11,32 +11,37 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UsuarioController {
-	@Autowired
-	private UsuarioRepo usuarioRepo;
-        
-        @Autowired
-        private TipoUsuarioRepo tipoUsuarioRepo;
-	
-	@GetMapping("/api/usuarios")
-	public List<Usuario> getUsuarios(){
-		List<Usuario> usuarios = new ArrayList<>();
+    @Autowired
+    private UsuarioRepo usuarioRepo;
+
+    @Autowired
+    private TipoUsuarioRepo tipoUsuarioRepo;
+
+    @GetMapping("/api/usuarios")
+    public List<Usuario> getUsuarios(){
+        List<Usuario> usuarios = new ArrayList<>();
         usuarioRepo.findAll().forEach(usuarios::add);
         return usuarios;
-	}
-	
-	@GetMapping("/api/usuarios/{id}")
+    }
+
+    @GetMapping("/api/usuarios/{id}")
     public Usuario getUsuario(@PathVariable long id) {
         Optional<Usuario> retorno = usuarioRepo.findById(id);
         Usuario usuario = null;
         if(retorno.isPresent()) {
-        	usuario = retorno.get();
+            usuario = retorno.get();
         }
         return usuario;
     }
 
     @PostMapping("/api/usuarios")
     public Usuario createUsuario(@RequestBody Usuario usuario) {
-        Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());;
+        Optional<Usuario> optionUsu = usuarioRepo.findByMatricula(usuario.getMatricula());
+        if(optionUsu.isPresent()){
+            return optionUsu.get();
+        }
+        
+        Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(usuario.getIdTipoUsuario());
         if (!optionTipoUsuario.isPresent()) {
             return null;
         }
@@ -53,6 +58,10 @@ public class UsuarioController {
             LerCSV csv = new LerCSV();
             ArrayList<Usuario> usuarios =  csv.lerUsuario(file.getInputStream());
             for (Usuario u : usuarios) {
+                Optional<Usuario> optionUsu = usuarioRepo.findByMatricula(u.getMatricula());
+                if(optionUsu.isPresent()){
+                    continue;
+                }
                 Optional<TipoUsuario> optionTipoUsuario = tipoUsuarioRepo.findById(u.getIdTipoUsuario());
                 if (!optionTipoUsuario.isPresent()) {
                     continue;
@@ -94,7 +103,7 @@ public class UsuarioController {
         Usuario usuario = this.getUsuario(id);
         boolean result = false;
         if(usuario != null) {
-        	usuarioRepo.delete(usuario);
+            usuarioRepo.delete(usuario);
             result = true;
         }
         return "{ \"sucess\" : " + (result ? "true" : "false" ) + " }";
