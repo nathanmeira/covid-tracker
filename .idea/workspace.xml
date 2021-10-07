@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/membros.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/membros.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" afterDir="false" />
@@ -205,7 +206,7 @@
       <workItem from="1633321056771" duration="855000" />
       <workItem from="1633322123226" duration="4825000" />
       <workItem from="1633366376577" duration="5046000" />
-      <workItem from="1633451854088" duration="14802000" />
+      <workItem from="1633451854088" duration="16945000" />
     </task>
     <task id="LOCAL-00001" summary="Commit inicial">
       <created>1633217589128</created>
