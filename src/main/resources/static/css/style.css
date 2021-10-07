@@ -1,0 +1,75 @@
+*{
+    font-family: Roboto;
+    color: #7B7B7B;
+}
+
+h1{
+    font-size: xxx-large;
+    font-weight: lighter;
+}
+
+h3{
+    font-size: x-large;
+    font-weight: lighter;
+}
+
+body{
+    background-color: #f3f3f4;
+}
+
+
+.btn-primary{
+    background-color: #343a40;
+    border-color: #2b3035;
+}
+
+.login-card{
+    background-color: white;
+    height: 20em;
+    display: flex;
+    align-items: center;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.tracker-card{
+    height: 20em;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.centralize{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fwell{
+    background-color: #97E59A;
+    height: 100%;
+}
+
+.fwell:hover{
+    cursor: pointer;
+    background-color: #3bd63b;
+}
+
+.fbad{
+    background-color: #ffa4a4;
+    height: 100%;
+}
+
+.fbad:hover{
+    cursor: pointer;
+    background-color: #ff6666;
+}
+
+.clean-table{
+    background-color: white;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.05);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+}
