@@ -54,100 +54,20 @@
                 </div>
                 <table class="table table-hover" id="membros">
                     <thead>
-                    <tr>
-                        <th scope="col">NOME</th>
-                        <th scope="col">SETOR</th>
-                        <th scope="col">SENHA</th>
-                        <th scope="col">DATA DE NASCIMENTO</th>
-                        <th scope="col">CIDADE</th>
-                        <th scope="col">ESTADO</th>
-                        <th scope="col">Nº MATRICULA / FUNCIONAL</th>
-                        <th scope="col">TIPO</th>
-                        <th scope="col"></th>
-                    </tr>
+                        <tr>
+                            <th scope="col">NOME</th>
+                            <th scope="col">SETOR</th>
+                            <th scope="col">SENHA</th>
+                            <th scope="col">DATA DE NASCIMENTO</th>
+                            <th scope="col">CIDADE</th>
+                            <th scope="col">ESTADO</th>
+                            <th scope="col">Nº MATRICULA / FUNCIONAL</th>
+                            <th scope="col">TIPO</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>Nathan</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Mel</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Gustavo</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Amanda</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Daniel</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Estevan</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Pietro</td>
-                        <td>FCI</td>
-                        <td>123456</td>
-                        <td>25/05/1995</td>
-                        <td>São Paulo</td>
-                        <td>SP</td>
-                        <td>41901886</td>
-                        <td>ALUNO</td>
-                        <td></td>
-                    </tr>
-                    </tbody>
+                    <tbody id="corpoTabelaAssociado"></tbody>
                 </table>
-
-
+                <p id="paragrafoMensagem"></p>
             </div>
         </div>
     </body>
@@ -158,4 +78,43 @@
     $(document).ready( function () {
         $('#membros').DataTable();
     } );
+
+    const corpoTabela = document.querySelector('#corpoTabelaAssociado');
+    const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+
+    getUsuarios();
+
+    async function getUsuarios() {
+        const URL = `/api/usuarios`;
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTable(jsonResponse))
+            .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao listar associados (código " + error.message + ")";});
+    }
+
+    function fillTable( usuarios ) {
+        let linhasTabela = '';
+        let n = usuarios.length;
+        for (let i = 0; i < n; i++) {
+            let user = usuarios[i];
+            let data = new Date(user.dataNasc);
+            linhasTabela +=
+                '<tr>' +
+                '<td>' + user.nome + '</td>' +
+                '<td>' + user.setor + '</td>' +
+                `<td title="${user.senha}"> ******* </td>` +
+                '<td>' + data.toLocaleDateString() + '</td>' +
+                '<td>' + user.cidade   + '</td>' +
+                '<td>' + user.estado   + '</td>' +
+                '<td>' + user.matricula + '</td>' +
+                '<td>' + user.idTipoUsuario   + '</td>' +
+                '</tr>';
+        }
+        corpoTabela.innerHTML = linhasTabela;
+    }
+    function copyPassword(){
+
+    }
+
 </script>

@@ -41,6 +41,10 @@
                 <h3><b>Cadastro Novo Membro</b></h3>
             </div>
             <hr>
+            <div>
+                <p class="bold" id="paragrafoMensagem"></p>
+                <p class="small">Observação: a senha será gerada automaticamente</p>
+            </div>
         </header>
 
 
@@ -48,57 +52,46 @@
             <div class="pt-5 mx-auto clean-table">
                 <form>
                     <div class="form-row">
-                        <div class="form-group col-md-2">
-                            <label for="txtId">ID</label>
-                            <input type="number" class="form-control" id="txtId">
+                        <div class="form-group col-md-6">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome">
                         </div>
-                        <div class="form-group col-md-2">
-                            <label for="txtMatricula">Matrícula</label>
-                            <input type="number" class="form-control" id="txtMatricula">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="txtNome">Nome</label>
-                            <input type="text" class="form-control" id="txtNome">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="txtSenha">Senha</label>
-                            <input type="password" class="form-control" id="txtSenha">
+                        <div class="form-group col-md-6">
+                            <label for="matricula">Matrícula</label>
+                            <input type="number" class="form-control" id="matricula">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="txtSetor">Setor</label>
-                            <input type="text" class="form-control" id="txtSetor">
+                            <label for="setor">Setor</label>
+                            <input type="text" class="form-control" id="setor">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="txtTipo">Tipo</label>
-                            <select class="form-control" id="txtTipo">
-                                <option></option>
-                                <option>Admin</option>
-                                <option>Membro</option>
-                                <option>Professor</option>
+                            <label for="tipo">Tipo</label>
+                            <select class="form-control" id="tipo">
+                                <option value="1">Admin</option>
+                                <option value="2">Membro</option>
+                                <option value="6">Professor</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="txtDataNasc">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="txtDataNasc">
+                            <label for="dataNasc">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNasc">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="txtEstado">Estado</label>
-                            <input type="text" class="form-control" id="txtEstado">
+                            <label for="estado">Estado</label>
+                            <input type="text" class="form-control" id="estado">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="txtCidade">Cidade</label>
-                            <input type="text" class="form-control" id="txtCidade">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" class="form-control" id="cidade">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" value="Salvar" onclick="salvarUsuario()" id="#btnSalvar">Salvar</button>
-                    <button type="submit" class="btn btn-outline-secondary" value="Voltar" onclick="goBack()" id="#btnVoltar">Voltar</button>
+                    <button type="button" class="btn btn-primary" value="Salvar" onclick="criarUsuario()" id="#btnSalvar">Salvar</button>
+                    <button type="button" class="btn btn-outline-secondary" value="Voltar" onclick="goBack()" id="#btnVoltar">Voltar</button>
                 </form>
-
-
             </div>
         </div>
     </body>
@@ -106,7 +99,44 @@
 </html>
 
 <script>
+    const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+    const nome = document.querySelector('#nome');
+    const matricula = document.querySelector('#matricula');
+    const setor = document.querySelector('#setor');
+    const tipo = document.querySelector('#tipo');
+    const dataNasc = document.querySelector('#dataNasc');
+    const estado = document.querySelector('#estado');
+    const cidade = document.querySelector('#cidade');
+
     function goBack() {
-        window.history.back();
+        window.location.href = "membros.html"
+    }
+
+    paragrafoMensagem.innerHTML = 'Após preencher os dados solicitados, clique em "Salvar"'
+
+    async function criarUsuario() {
+        const URL = `/api/usuarios`;
+        const usuario = {
+            'nome': nome.value,
+            'matricula': matricula.value,
+            'setor': setor.value,
+            'idTipoUsuario': tipo.value,
+            'dataNasc': dataNasc.value,
+            'estado': estado.value,
+            'cidade': cidade.value
+        };
+        const postRequest = {
+            method: 'POST',
+            body: JSON.stringify(usuario),
+            headers: { 'Content-type': 'application/json' }
+        };
+        fetch(URL, postRequest)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+            .then(resposta => resposta.json())
+            .then(goBack)
+            .catch(function(error) {
+                paragrafoMensagem.innerHTML = `Erro ao criar usuário. + ${error.message}`;
+                alert('Erro ao criar usuário. Código de erro: ' + error.message);
+            });
     }
 </script>
