@@ -9,6 +9,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,15 +27,14 @@
                     <h5>Caso não possua um login, solicite ao administrador</h5>
                 </div>
                 <div class="login-card">
-                    <form class="col-md-6 mx-auto">
+                    <form class="col-md-6 mx-auto" id="form-login">
                         <div class="form-group">
-                            <input type="name" class="form-control" placeholder="Usuário" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="text" name="matricula" class="form-control" placeholder="Usuário" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Senha" id="exampleInputPassword1">
+                            <input type="password"  name="senha" class="form-control" placeholder="Senha" id="exampleInputPassword1">
                         </div>
-<!--                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>-->
-                        <a href="tracker.html" class="btn btn-primary btn-block">Entrar</a>
+                        <button type="button" class="btn btn-primary btn-block" onclick="logar()">Entrar</button>
                     </form>
                 </div>
 
@@ -43,6 +44,40 @@
 
 </html>
 
-<script>
-
+<script>   
+    function alertaCredenciasInvalidas(){
+        Swal.fire({
+            title: 'Ops!',
+            text: 'Usuário ou senha inválidas',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#d33'
+        })
+    }
+    function logar(){
+        const formLogin = document.getElementById('form-login');
+        formData = new FormData(formLogin);        
+        console.log(formLogin.querySelector('input[name="senha"]').value);
+        fetch("/api/usuarios/logar", {
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({
+                "matricula": formLogin.querySelector('input[name="matricula"]').value,
+                "senha": formLogin.querySelector('input[name="senha"]').value
+            })
+        })
+        .then((response) => response.json())
+        .then(data => {
+            if(data.id != undefined){                
+                window.location.href = "/tracker.html";
+            } else {
+                alertaCredenciasInvalidas();
+            }
+        })
+        .catch(err => {
+            alertaCredenciasInvalidas();
+        });
+    }
 </script>
