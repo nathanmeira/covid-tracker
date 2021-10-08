@@ -12,6 +12,7 @@
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,7 +50,7 @@
         <div class="d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
             <div class="pt-5 mx-auto clean-table">
                 <div class="pb-4 float-right">
-                    <button type="button" class="btn btn-outline-primary">Importar Usuários</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="sweetImportarUsuarios()">Importar Usuários</button>
                     <a href="novo_membro.html"><button type="button" class="btn btn-outline-secondary">Adicionar Membro</button></a>
                 </div>
                 <table class="table table-hover" id="membros">
@@ -116,5 +117,54 @@
     function copyPassword(){
 
     }
+    
+    function sweetImportarUsuarios(){
+        Swal.fire({
+            title: 'Escolha um arquivo CSV para salvar membros',
+            input: 'file',
+            showCancelButton: true,
+            confirmButtonText: 'Enviar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+              console.log(login)
+              var data = new FormData();
+              data.append('file', login);
+              return fetch(`api/usuarios/csv`, {
+                    "method": "POST",
+                    "body": data
+                  })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error(response.statusText)
+                  }
+                  return response.json()
+                })
+                .catch(error => {
+                  Swal.fire({
+                    title: 'Ops!',
+                    text: 'Erro inesperado',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#d33'
+                  })
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Usuários salvos com sucesso',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload();
+                }
+             })
+          }
+        })
+    }    
 
 </script>
