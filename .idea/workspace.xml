@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/membros.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/membros.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <list id="496fb3b2-cbc9-4bc2-9e4e-f61744c33fdb" name="Revert &quot;Front end updated&quot;" comment="Revert &quot;Front end updated&quot;&#10;&#10;This reverts commit 1a759005" />
     <list id="fca3c89e-c930-4e83-8573-d21336c8d354" name="Revert &quot;heroku fix&quot;" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
@@ -202,7 +207,7 @@
       <workItem from="1633321056771" duration="855000" />
       <workItem from="1633322123226" duration="4825000" />
       <workItem from="1633366376577" duration="5046000" />
-      <workItem from="1633451854088" duration="25851000" />
+      <workItem from="1633451854088" duration="29594000" />
     </task>
     <task id="LOCAL-00001" summary="Commit inicial">
       <created>1633217589128</created>
