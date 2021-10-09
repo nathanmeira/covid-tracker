@@ -101,18 +101,24 @@
     }
 
     async function excluirSintoma(sint){
-        const URL = `/api/sintomas/${sint}`;
-        const postRequest = {
-            method: 'DELETE',
-        };
-        fetch(URL, postRequest)
-            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-            .then(resposta => resposta.json())
-            .then(goBack)
-            .catch(function(error) {
-                paragrafoMensagem.innerHTML = `Erro ao excluir sintoma. + ${error.message}`;
-                alert('Erro ao excluir sintoma. Erro: ' + error.message);
-            });
+        let confirmation = confirm('Tem certeza de que deseja excluir este sintoma?');
+        if (confirmation == true){
+            const URL = `/api/sintomas/${sint}`;
+            const postRequest = {
+                method: 'DELETE',
+            };
+            fetch(URL, postRequest)
+                .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+                .then(resposta => resposta.json())
+                .then(goBack)
+                .catch(function(error) {
+                    paragrafoMensagem.innerHTML = `Erro ao excluir sintoma. + ${error.message}`;
+                    alert('Erro ao excluir sintoma. Erro: ' + error.message);
+                });
+        } else {
+            goBack();
+        }
+
     }
 
 </script>
