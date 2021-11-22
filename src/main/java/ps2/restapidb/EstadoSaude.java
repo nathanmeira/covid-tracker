@@ -1,12 +1,16 @@
 package ps2.restapidb;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,6 +36,13 @@ public class EstadoSaude {
     @Column(name = "dtCriacao", insertable = false, updatable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dtCriacao;
+    
+    @ManyToMany
+    @JoinTable(
+            name="estado_saude_sintomas", 
+            joinColumns = {@JoinColumn(name="estado_saude_id")}, 
+            inverseJoinColumns = {@JoinColumn(name="sintoma_id")})
+    List <Sintoma> sintomas;
 
     public EstadoSaude(long id, boolean isBem, long idUsuario) {
         this.id = id;
@@ -78,8 +89,14 @@ public class EstadoSaude {
     public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
-    
-    
+
+    public List getSintomas() {
+        return sintomas;
+    }
+
+    public void setSintomas(List sintomas) {
+        this.sintomas = sintomas;
+    }
     
     
 }

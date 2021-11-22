@@ -17,6 +17,9 @@ public class EstadoSaudeController {
     
     @Autowired
     private UsuarioRepo usuarioRepo;
+    
+    @Autowired
+    private SintomaRepo sintomaRepo;
 
     @GetMapping("/api/estado-saude")
     public List<EstadoSaude> getEstadosSaude(){
@@ -44,7 +47,19 @@ public class EstadoSaudeController {
                "{ \"success\": false, \"estado_saude_id\": 0 }" 
             );
         }
+        
+        List<Sintoma> sintomas = new ArrayList<>();
+        for (Object s : estado.sintomas) {
+            if(s instanceof Integer){                
+                Integer a = new Integer((int) s);
+                Optional<Sintoma> optionSintoma = sintomaRepo.findById(a.longValue());
+                if (optionUsuario.isPresent()) {
+                    sintomas.add(optionSintoma.get());
+                }
+            }
+        }
        
+       estado.setSintomas(sintomas);
        estado.setUsuario(optionUsuario.get());
        estadoSaudeRepo.save(estado);
        return (
