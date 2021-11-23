@@ -50,6 +50,22 @@ body{
     justify-content: center;
 }
 
+.fbad2{
+    display: flex;
+    align-self: flex-start;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffa4a4;
+}
+
+.fwell2{
+    display: flex;
+    align-self: flex-start;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffa4a4;
+}
+
 .fwell{
     background-color: #97E59A;
     height: 100%;
@@ -80,4 +96,8 @@ body{
 
 .default-shadow{
     box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.hide{
+    display: none;
 }

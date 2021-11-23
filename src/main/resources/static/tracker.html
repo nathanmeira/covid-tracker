@@ -49,12 +49,55 @@
                 </div>
 
                 <div class="tracker-card">
-                    <div class="col-md-6 centralize fwell">
+
+                    <div id="fwell" class="col-md-6 centralize fwell" onclick="registryState(1)">
                         <h2 class="text-white">BEM</h2>
                     </div>
-                    <div class="col-md-6 centralize fbad">
+                    <div id="fbad" class="col-md-6 centralize fbad" onclick="registryState(2)">
                         <h2 class="text-white">NÃO MUITO BEM</h2>
                     </div>
+
+                    <div id="fwell-step-1" class="col-md-12 centralize flex-column hide">
+                        <div class="mb-5">
+                            <h2>Você está se sentindo: BEM</h2>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" onclick="location.reload()">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="sendSubmit(1)">Confirmar</button>
+                        </div>
+                    </div>
+                    <div id="fwell-step-2" class="col-md-6 centralize flex-column hide">
+                        <p>Obrigado pelo seu registro!</p>
+                        <p>06/09/2021 às 18:00</p>
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">Voltar</button>
+                    </div>
+
+                    <div id="fbad-step-1" class="col-md-12 centralize flex-column hide">
+                        <div class="mb-5">
+                            <h2>Você está se sentindo: NÃO MUITO BEM</h2>
+                        </div>
+                        <div class="mb-5">
+                            <input type="checkbox">Sintoma 1</input>
+                            <input type="checkbox">Sintoma 2</input>
+                            <input type="checkbox">Sintoma 3</input>
+                            <input type="checkbox">Sintoma 4</input>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" onclick="location.reload()">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="sendSubmit(2)">Confirmar</button>
+                        </div>
+                    </div>
+                    <div id="fbad-step-2" class="col-md-10 centralize flex-column hide">
+                        <div class="mb-2 text-center">
+                            <p>Obrigado pelo registro de informações!</p>
+                            <p>Pelos sintomas selecionados, recomendamos que busque orientações em um canal oficial do serviço de saúde.</p>
+                            <p>Para mais informações, acesse: <a href="https://aps.saude.gov.br/ape/corona/telesus">https://aps.saude.gov.br/ape/corona/telesus</a></p>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">Voltar</button>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -63,5 +106,37 @@
 </html>
 
 <script>
+    const fbad = document.getElementById('fbad');
+    const fwell = document.getElementById('fwell');
+    const fwellStep1 = document.getElementById('fwell-step-1');
+    const fwellStep2 = document.getElementById('fwell-step-2');
+    const fbadStep1 = document.getElementById('fbad-step-1');
+    const fbadStep2 = document.getElementById('fbad-step-2');
 
+    function registryState(state){
+
+        if(state === 1){
+            fbad.classList.add('hide');
+            fwell.classList.add('hide');
+
+            fwellStep1.classList.remove('hide');
+
+        } else if (state === 2){
+            fbad.classList.add('hide');
+            fwell.classList.add('hide');
+
+            fbadStep1.classList.remove('hide');
+        }
+    }
+
+    function sendSubmit(state){
+
+        if(state === 1){
+            fwellStep1.classList.add('hide');
+            fwellStep2.classList.remove('hide');
+        } else if (state === 2){
+            fbadStep1.classList.add('hide');
+            fbadStep2.classList.remove('hide');
+        }
+    }
 </script>
