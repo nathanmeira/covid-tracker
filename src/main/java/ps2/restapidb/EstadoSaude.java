@@ -44,6 +44,10 @@ public class EstadoSaude {
             inverseJoinColumns = {@JoinColumn(name="sintoma_id")})
     List <Sintoma> sintomas;
 
+    public EstadoSaude() {
+
+    }
+    
     public EstadoSaude(long id, boolean isBem, long idUsuario) {
         this.id = id;
         this.isBem = isBem;

@@ -66,4 +66,14 @@ public class EstadoSaudeController {
         "{ \"success\": true, \"estado_saude_id\": "+ estado.getId() + " }"
        );
     }	
+    
+    @GetMapping("/api/estado-saude/usuario/{id}")
+    public List<EstadoSaude> getEstadoSaudeUsuario(@PathVariable long id) {
+        Optional<List<EstadoSaude>> retorno = estadoSaudeRepo.findByIdUsuario(id);
+        List<EstadoSaude> estado = null;
+        if(retorno.isPresent()) {
+            estado = retorno.get();
+        }
+        return estado;
+    }
 }
