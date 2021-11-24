@@ -76,12 +76,7 @@
                         <div class="mb-5">
                             <h2>Você está se sentindo: NÃO MUITO BEM</h2>
                         </div>
-                        <div class="mb-5">
-                            <input type="checkbox">Sintoma 1</input>
-                            <input type="checkbox">Sintoma 2</input>
-                            <input type="checkbox">Sintoma 3</input>
-                            <input type="checkbox">Sintoma 4</input>
-                        </div>
+                        <div id="sintList" class="row col-md-10 mb-5"></div>
                         <div>
                             <button type="button" class="btn btn-secondary" onclick="location.reload()">Cancelar</button>
                             <button type="button" class="btn btn-primary" onclick="sendSubmit(2)">Confirmar</button>
@@ -95,9 +90,6 @@
                         </div>
                         <button type="button" class="btn btn-secondary" onclick="location.reload()">Voltar</button>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -112,6 +104,33 @@
     const fwellStep2 = document.getElementById('fwell-step-2');
     const fbadStep1 = document.getElementById('fbad-step-1');
     const fbadStep2 = document.getElementById('fbad-step-2');
+    const listaSintomas = document.querySelector('#sintList');
+
+
+    getSintomas();
+
+    async function getSintomas() {
+        const URL = `/api/sintomas`;
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => listarSintomas(jsonResponse))
+            .catch(function(error) { listaSintomas.innerHTML = "Erro ao listar sintomas (código " + error.message + ")";});
+    }
+
+    function listarSintomas(sintomas){
+        let sintList = '';
+        let n = sintomas.length;
+        for (let i = 0; i < n; i++) {
+            let sint = sintomas[i];
+            sintList +=
+                `<div class="col-md-4 text-nowrap">` +
+                    `<input id="${sint.nome}" type="checkbox" value="${sint.id}">` +
+                    `<label for="${sint.nome}">${(sint.nome)}</label>` +
+                `</div>`;
+        }
+        listaSintomas.innerHTML = sintList;
+    }
 
     function registryState(state){
 

@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="fixes">
+    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="wip: mock do form de cadastro de sintomas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <list id="496fb3b2-cbc9-4bc2-9e4e-f61744c33fdb" name="Revert &quot;Front end updated&quot;" comment="Revert &quot;Front end updated&quot;&#10;&#10;This reverts commit 1a759005" />
     <list id="fca3c89e-c930-4e83-8573-d21336c8d354" name="Revert &quot;heroku fix&quot;" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
@@ -89,13 +90,15 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot._App (2)">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -208,7 +211,8 @@
       <workItem from="1633322123226" duration="4825000" />
       <workItem from="1633366376577" duration="5046000" />
       <workItem from="1633451854088" duration="41263000" />
-      <workItem from="1637614496884" duration="8517000" />
+      <workItem from="1637614496884" duration="10854000" />
+      <workItem from="1637706412669" duration="3764000" />
     </task>
     <task id="LOCAL-00001" summary="Commit inicial">
       <created>1633217589128</created>
@@ -231,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633320598363</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="wip: mock do form de cadastro de sintomas">
+      <created>1637628623027</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1637628623027</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +294,7 @@
     <MESSAGE value="Commit inicial" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="Front end updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Front end updated" />
+    <MESSAGE value="wip: mock do form de cadastro de sintomas" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip: mock do form de cadastro de sintomas" />
   </component>
 </project>

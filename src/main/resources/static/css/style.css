@@ -13,8 +13,19 @@ h3{
     font-weight: lighter;
 }
 
+input{
+    margin: .4rem;
+}
+
 .text-white{
     color: white;
+}
+
+.truncate{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 body{
