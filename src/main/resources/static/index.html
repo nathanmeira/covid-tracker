@@ -70,7 +70,8 @@
         })
         .then((response) => response.json())
         .then(data => {
-            if(data.id != undefined){                
+            if(data.id != undefined){
+                localStorage.setItem('userID', data.id);
                 window.location.href = "/tracker.html";
             } else {
                 alertaCredenciasInvalidas();

@@ -17,7 +17,7 @@
             <a class="navbar-brand" href="index.html">COVID TRACKER</a>
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li><a href="tracker.html" class="nav-link text-secondary">Início</a></li>
-                    <li><a href="#" class="nav-link text-white">Histórico</a></li>
+                    <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
                     <li class="nav-item dropdown show">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Opções
@@ -50,10 +50,10 @@
 
                 <div class="tracker-card">
 
-                    <div id="fwell" class="col-md-6 centralize fwell" onclick="registryState(1)">
+                    <div id="fwell" class="col-md-6 centralize fwell" onclick="selectState(1)">
                         <h2 class="text-white">BEM</h2>
                     </div>
-                    <div id="fbad" class="col-md-6 centralize fbad" onclick="registryState(2)">
+                    <div id="fbad" class="col-md-6 centralize fbad" onclick="selectState(2)">
                         <h2 class="text-white">NÃO MUITO BEM</h2>
                     </div>
 
@@ -63,12 +63,12 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-secondary" onclick="location.reload()">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="sendSubmit(1)">Confirmar</button>
+                            <button type="button" class="btn btn-primary" onclick="submitState(1)">Confirmar</button>
                         </div>
                     </div>
                     <div id="fwell-step-2" class="col-md-6 centralize flex-column hide">
                         <p>Obrigado pelo seu registro!</p>
-                        <p>06/09/2021 às 18:00</p>
+                        <p id="currentTime"></p>
                         <button type="button" class="btn btn-secondary" onclick="location.reload()">Voltar</button>
                     </div>
 
@@ -76,10 +76,12 @@
                         <div class="mb-5">
                             <h2>Você está se sentindo: NÃO MUITO BEM</h2>
                         </div>
+
                         <div id="sintList" class="row col-md-10 mb-5"></div>
+
                         <div>
                             <button type="button" class="btn btn-secondary" onclick="location.reload()">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="sendSubmit(2)">Confirmar</button>
+                            <button type="button" class="btn btn-primary" onclick="submitState(2)">Confirmar</button>
                         </div>
                     </div>
                     <div id="fbad-step-2" class="col-md-10 centralize flex-column hide">
@@ -105,7 +107,7 @@
     const fbadStep1 = document.getElementById('fbad-step-1');
     const fbadStep2 = document.getElementById('fbad-step-2');
     const listaSintomas = document.querySelector('#sintList');
-
+    const currentTime = document.querySelector('#currentTime');
 
     getSintomas();
 
@@ -121,8 +123,10 @@
     function listarSintomas(sintomas){
         let sintList = '';
         let n = sintomas.length;
+        let sintArray = [];
         for (let i = 0; i < n; i++) {
             let sint = sintomas[i];
+            sintArray.push(sintomas[i]);
             sintList +=
                 `<div class="col-md-4 text-nowrap">` +
                     `<input id="${sint.nome}" type="checkbox" value="${sint.id}">` +
@@ -132,7 +136,7 @@
         listaSintomas.innerHTML = sintList;
     }
 
-    function registryState(state){
+    function selectState(state){
 
         if(state === 1){
             fbad.classList.add('hide');
@@ -148,11 +152,36 @@
         }
     }
 
-    function sendSubmit(state){
+    function submitState(state){
 
         if(state === 1){
             fwellStep1.classList.add('hide');
             fwellStep2.classList.remove('hide');
+
+            let today = new Date();
+
+            const currentUser = localStorage.getItem('userID');
+
+            fetch("/api/estado-saude", {
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": JSON.stringify({
+                    "is_bem": 1,
+                    "idUsuario": currentUser,
+                    "sintomas": []
+                })
+            })
+            .then((response) => response.json())
+            .catch(error => {
+                console.log(error);
+            });
+
+            currentTime.innerHTML = today;
+
+
+
         } else if (state === 2){
             fbadStep1.classList.add('hide');
             fbadStep2.classList.remove('hide');
