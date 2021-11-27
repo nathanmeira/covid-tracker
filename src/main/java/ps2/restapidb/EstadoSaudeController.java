@@ -2,10 +2,13 @@ package ps2.restapidb;
 
 ;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,8 +71,24 @@ public class EstadoSaudeController {
     }	
     
     @GetMapping("/api/estado-saude/usuario/{id}")
-    public List<EstadoSaude> getEstadoSaudeUsuario(@PathVariable long id) {
-        Optional<List<EstadoSaude>> retorno = estadoSaudeRepo.findByIdUsuario(id);
+    public List<EstadoSaude> getEstadoSaudeUsuario(
+                @PathVariable long id, 
+                @RequestParam("start") Optional<String> start,
+                @RequestParam("end") Optional<String> end
+    ) throws ParseException {
+        Optional<List<EstadoSaude>> retorno;        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        
+        if(!start.isPresent()){
+            retorno = estadoSaudeRepo.findByIdUsuario(id);
+        } else if(start.isPresent() && !end.isPresent()){
+            Date dateStart = formatter.parse(start.get());
+            retorno = estadoSaudeRepo.findByIdUsuarioAndInitialDate(id, dateStart);
+        } else {
+            Date dateStart = formatter.parse(start.get());
+            Date dateEnd = formatter.parse(end.get());
+            retorno = estadoSaudeRepo.findByIdUsuarioAndInitiallEndDate(id, dateStart, dateEnd);
+        }
         List<EstadoSaude> estado = null;
         if(retorno.isPresent()) {
             estado = retorno.get();
