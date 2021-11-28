@@ -42,15 +42,35 @@
     <body>
         <header class="container mt-5">
             <div class="row">
-                <h3><b>Histórico</b></h3>
+                <div class="col-md-12">                    
+                    <h3><b>Histórico</b></h3>                    
+                    <hr>
+                </div>
+                <div class="col-md-9">                    
+                    <form>
+                        <div class="row">
+                            <div class="col form-group">
+                              <label for="data-inicio">Data Início</label>
+                              <input name="data-inicio" type="date" class="form-control mx-0" placeholder="First name" id="data-inicio" value="2021-10-01">
+                            </div>
+                            <div class="col form-group">
+                              <label for="data-fim">Data Fim</label>
+                              <input name="data-fim" type="date" class="form-control mx-0" placeholder="Last name" id="data-fim">
+                            </div>
+                            <div class="col-2 form-group">
+                                <label class="d-block" for="filtrar-registros">&nbsp;</label>
+                                <button type="button" class="btn-primary mt-2" onclick="getUsuarios()" id="filtrar-registros">Filtrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <hr>
         </header>
 
 
-        <div class="d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
-            <div class="pt-5 mx-auto clean-table">
-                <table class="table table-striped table-hover" id="registros">
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
+            <div class="pt-5 mx-auto clean-table w-100">
+                <table class="table table-striped table-hove" id="registros">
                     <thead>
                         <tr>
                             <th scope="col">NOME</th>
@@ -79,7 +99,15 @@
     getUsuarios();
 
     async function getUsuarios() {
-        const URL = `/api/estado-saude`;
+        const dateInicio = document.querySelector('#data-inicio');
+        const dateFim = document.querySelector('#data-fim');
+        const currentUser = localStorage.getItem('userID');
+        let URL = `/api/estado-saude/usuario/${currentUser}`;
+        if(dateInicio.value && !dateFim.value){
+            URL += '?start='+dateInicio.value
+        } else {
+            URL += '?start='+dateInicio.value+"&end="+dateFim.value
+        }
         fetch(URL)
             .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
             .then(resposta => resposta.json())
@@ -93,21 +121,28 @@
         for (let i = 0; i < n; i++) {
             let dado = registros[i];
             let registroSaude = dado.isBem;
-            if (registroSaude === 0){
-                registroSaude = 'NÃO MUITO BEM';
+            if (registroSaude === false){
+                registroSaude = '<span class="text-danger">NÃO MUITO BEM</span>';
             } else {
-                registroSaude = 'BEM';
+                registroSaude = '<span class="text-success">BEM</span>';
             }
             let data = new Date(dado.dtCriacao);
+            let sintomasHtml = Array.prototype.reduce.call(dado.sintomas, (acu, item) => {
+                return acu + htmlListSintomas(item);
+            }, '');
             linhasTabela +=
                 '<tr>' +
                 '<td>' + dado.usuario.nome + '</td>' +
                 '<td>' + registroSaude + '</td>' +
                 '<td>' + data.toLocaleDateString() + '</td>' +
-                '<td>' + dado.sintomas + '</td>' +
+                '<td><ul>' + sintomasHtml + '</ul></td>' +
                 '</tr>';
         }
         corpoTabela.innerHTML = linhasTabela;
+    }
+    
+    function htmlListSintomas(item){
+        return "<li>"+item.nome+"</li>";
     }
 
 </script>
