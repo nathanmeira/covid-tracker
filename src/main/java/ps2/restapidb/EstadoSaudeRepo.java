@@ -23,4 +23,9 @@ public interface EstadoSaudeRepo extends CrudRepository<EstadoSaude, Long>{
             + " where (DATE(e.dtCriacao) >= ?1 AND DATE(e.dtCriacao) <= ?2) AND e.isBem = ?3 "
             + " GROUP BY CAST(e.dtCriacao AS date) ORDER BY teste ASC")
     Optional<List<Object>> getQtdRegistrosByEstadoSaude(Date initial, Date end, boolean isBem);
+    
+    @Query("select e.usuario.setor, count(*), CAST(e.dtCriacao AS date) as teste from EstadoSaude e "
+            + " where (DATE(e.dtCriacao) >= ?1 AND DATE(e.dtCriacao) <= ?2) "
+            + " GROUP BY e.usuario.setor, CAST(e.dtCriacao AS date) ORDER BY teste ASC")
+    Optional<List<Object>> getQtdRegistrosBySetor(Date initial, Date end);
 }

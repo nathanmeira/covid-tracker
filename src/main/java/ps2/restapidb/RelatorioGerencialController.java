@@ -93,4 +93,27 @@ public class RelatorioGerencialController {
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosByEstadoSaude(dateStart, dateEnd, true);
         return s.get();
     }
+    
+    @GetMapping("/api/relatorios/registros/setor/qtd")
+    public List<Object> getQtdRegistrosSetor(
+        @RequestParam("start") Optional<String> start,
+        @RequestParam("end") Optional<String> end
+    ) throws ParseException {      
+        LocalDateTime now = LocalDateTime.now(); 
+        String dateNowFormat = now.getYear() + "-" + now.getMonthValue()+ "-" + now.getDayOfMonth();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date dateStart = formatter.parse("2021-01-01");
+        Date dateEnd = formatter.parse(dateNowFormat);
+        
+        if(start.isPresent() && !end.isPresent()){
+            dateStart = formatter.parse(start.get());
+        } else if(start.isPresent() && end.isPresent()) {
+            dateStart = formatter.parse(start.get());
+            dateEnd = formatter.parse(end.get());
+        }      
+      
+        Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosBySetor(dateStart, dateEnd);
+        return s.get();
+    }
 }
