@@ -391,7 +391,7 @@
         const dateFim = document.querySelector('#data-fim');
         if(dateInicio.value && !dateFim.value){
             URL += '?start='+dateInicio.value
-        } else {
+        } else if(dateInicio.value && dateFim.value){
             URL += '?start='+dateInicio.value+"&end="+dateFim.value
         }
         return URL;
