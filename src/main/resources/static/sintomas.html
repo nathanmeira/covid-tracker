@@ -50,19 +50,21 @@
     <body>
         <header class="container mt-5">
             <div class="row">
-                <h3><b>Cadastro de Sintomas</b></h3>
+                <div class="col-md-12">                    
+                    <h3><b>Cadastro de Sintomas</b></h3>
+                </div>
             </div>
             <hr>
         </header>
 
 
-        <div class="d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
             <div class="pt-5">
                 <div>
                     <a href="novo_sintoma.html"><button type="button" class="btn btn-outline-primary">Adicionar Sintoma</button></a>
                 </div>
                 <hr>
-                <div class="card-deck" id="card-sint"></div>
+                <div class="card-deck justify-content-center" id="card-sint"></div>
             </div>
             <p id="paragrafoMensagem"></p>
 
@@ -94,7 +96,7 @@
         for (let i = 0; i < n; i++) {
             let sint = sintomas[i];
             cards +=
-                `<div class="card default-shadow text-center">` +
+                `<div class="card default-shadow text-center" style="max-width: 200px; min-width: 200px; margin-bottom: 30px">` +
                     `<div class="card-body">` +
                         `<h5 class="card-title">${capitalize(sint.nome)}</h5>` +
                     `</div>` +
