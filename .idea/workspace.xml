@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="wip: historico">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/associado.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/exemplar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/historico.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/historico.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/livro.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/membros.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/membros.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_sintoma.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_sintoma.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sintomas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/sintomas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/usuario.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/associado.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/exemplar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/livro.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/usuario.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/relatorios.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/relatorios.html" afterDir="false" />
     </list>
     <list id="496fb3b2-cbc9-4bc2-9e4e-f61744c33fdb" name="Revert &quot;Front end updated&quot;" comment="Revert &quot;Front end updated&quot;&#10;&#10;This reverts commit 1a759005" />
     <list id="fca3c89e-c930-4e83-8573-d21336c8d354" name="Revert &quot;heroku fix&quot;" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
