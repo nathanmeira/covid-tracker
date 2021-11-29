@@ -45,6 +45,9 @@ public class RelatorioGerencialController {
         }      
       
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosDiario(dateStart, dateEnd);
+        if(!s.isPresent()){
+            return new ArrayList<>();
+        }
         return s.get();
     }
     
@@ -68,6 +71,9 @@ public class RelatorioGerencialController {
         }      
       
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosByEstadoSaude(dateStart, dateEnd, false);
+        if(!s.isPresent()){
+            return new ArrayList<>();
+        }
         return s.get();
     }
     
@@ -117,6 +123,9 @@ public class RelatorioGerencialController {
         }      
       
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosBySetor(dateStart, dateEnd);
+        if(!s.isPresent()){
+            return new ArrayList<>();
+        }
         return s.get();
     }
     
@@ -140,6 +149,9 @@ public class RelatorioGerencialController {
         }      
       
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosBySetor(dateStart, dateEnd, false);
+        if(!s.isPresent()){
+            return new ArrayList<>();
+        }
         return s.get();
     }
 }
