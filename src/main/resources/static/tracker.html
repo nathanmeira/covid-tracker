@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <title>Index</title>
         <meta charset="UTF-8">
@@ -8,6 +7,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="js/script.js"></script>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,22 +16,30 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">COVID TRACKER</a>
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                    <li><a href="tracker.html" class="nav-link text-secondary">Início</a></li>
-                    <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
-                    <li class="nav-item dropdown show">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Opções
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="membros.html">Cadastro de Membros</a>
-                            <a class="dropdown-item" href="sintomas.html">Cadastro de Sintomas</a>
-                            <a class="dropdown-item" href="relatorios.html">Relatórios</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.html">Sair</a>
-                        </div>
-                    </li>
-                </ul>
+            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                <li><a href="tracker.html" class="nav-link text-secondary">Início</a></li>
+                <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
+                <li id="drop-admin" class="nav-item dropdown hide">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções
+                    </button>
+                    <div  class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="membros.html">Cadastro de Membros</a>
+                        <a class="dropdown-item" href="sintomas.html">Cadastro de Sintomas</a>
+                        <a class="dropdown-item" href="relatorios.html">Relatórios</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="logOut()">Sair</a>
+                    </div>
+                </li>
+                <li id="drop-membro" class="nav-item dropdown hide">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" onclick="logOut()">Sair</a>
+                    </div>
+                </li>
+            </ul>
         </div>
 
     </nav>
@@ -39,7 +47,7 @@
     <body>
         <header class="container mt-5">
             <div class="row">
-                <h3>Olá, <b id="username"></b>!</h3>
+                <h3>Olá, seja bem-vindo(a) <b id="username"></b>!</h3>
             </div>
         </header>
         <div class="d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column col-md-8">
@@ -109,9 +117,12 @@
     const fbadStep2 = document.getElementById('fbad-step-2');
     const listaSintomas = document.querySelector('#sintList');
     const currentTime = document.querySelector('#currentTime');
-    const username = document.querySelector('#username');
-    username.innerText = localStorage.getItem('username');
 
+    const username = document.querySelector('#username');
+    username.innerText = userName;
+
+    checkSection();
+    showDropdown();
     getSintomas();
 
     async function getSintomas() {

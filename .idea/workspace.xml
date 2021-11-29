@@ -4,19 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="wip: form cadastro estado de saude dinamico">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/historico.html" afterDir="false" />
+    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="wip: historico">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/associado.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/exemplar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/historico.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/historico.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/livro.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/membros.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/membros.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_membro.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/novo_sintoma.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/novo_sintoma.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/sintomas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/sintomas.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/usuario.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/associado.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/exemplar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/livro.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/usuario.html" beforeDir="false" />
     </list>
     <list id="496fb3b2-cbc9-4bc2-9e4e-f61744c33fdb" name="Revert &quot;Front end updated&quot;" comment="Revert &quot;Front end updated&quot;&#10;&#10;This reverts commit 1a759005" />
     <list id="fca3c89e-c930-4e83-8573-d21336c8d354" name="Revert &quot;heroku fix&quot;" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
@@ -41,6 +49,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -66,6 +79,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static" />
@@ -199,6 +213,9 @@
       <list>
         <item itemvalue="Spring Boot._App (1)" />
         <item itemvalue="Spring Boot._App" />
+        <item itemvalue="Spring Boot._App (1)" />
+        <item itemvalue="Spring Boot._App" />
+        <item itemvalue="Spring Boot._App (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -220,7 +237,7 @@
       <workItem from="1637706412669" duration="4378000" />
       <workItem from="1637803029419" duration="2662000" />
       <workItem from="1637932885769" duration="1092000" />
-      <workItem from="1637963049980" duration="10860000" />
+      <workItem from="1637963049980" duration="24069000" />
     </task>
     <task id="LOCAL-00001" summary="Commit inicial">
       <created>1633217589128</created>
@@ -257,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637714568113</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="wip: historico">
+      <created>1637980666722</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1637980666722</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,6 +335,7 @@
     <MESSAGE value="Front end updated" />
     <MESSAGE value="wip: mock do form de cadastro de sintomas" />
     <MESSAGE value="wip: form cadastro estado de saude dinamico" />
-    <option name="LAST_COMMIT_MESSAGE" value="wip: form cadastro estado de saude dinamico" />
+    <MESSAGE value="wip: historico" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip: historico" />
   </component>
 </project>

@@ -19,22 +19,30 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="tracker.html">COVID TRACKER</a>
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                    <li><a href="tracker.html" class="nav-link text-white">Início</a></li>
-                    <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Opções
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="membros.html">Cadastro de Membros</a>
-                            <a class="dropdown-item" href="sintomas.html">Cadastro de Sintomas</a>
-                            <a class="dropdown-item" href="relatorios.html">Relatórios</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.html">Sair</a>
-                        </div>
-                    </li>
-                </ul>
+            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                <li><a href="tracker.html" class="nav-link text-white">Início</a></li>
+                <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
+                <li id="drop-admin" class="nav-item dropdown hide">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções
+                    </button>
+                    <div  class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="membros.html">Cadastro de Membros</a>
+                        <a class="dropdown-item" href="sintomas.html">Cadastro de Sintomas</a>
+                        <a class="dropdown-item" href="relatorios.html">Relatórios</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="logOut()">Sair</a>
+                    </div>
+                </li>
+                <li id="drop-membro" class="nav-item dropdown hide">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" onclick="logOut()">Sair</a>
+                    </div>
+                </li>
+            </ul>
         </div>
 
     </nav>
@@ -84,6 +92,8 @@
     const corpoTabela = document.querySelector('#corpoTabelaUsuario');
     const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 
+    checkSection();
+    showDropdown();
     getUsuarios();
 
     async function getUsuarios() {
