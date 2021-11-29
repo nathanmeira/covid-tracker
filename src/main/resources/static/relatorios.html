@@ -186,6 +186,26 @@
                         </div>
                         <a type="button" class="btn btn-primary ml-auto mt-3" href="#" onclick="download_table_as_csv('table5');">Baixar Relatório</a>
                     </div>                    
+                </div>   
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Registros Diários - Bem - Setor</h3>
+                        </div>
+                        <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                            <table class="table table-striped table-hove dataTableRegistros">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">DIA</th>
+                                        <th scope="col">SETOR</th>
+                                        <th scope="col">QUANTIDADE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTabelaRegistrosDiariosBemSetor"></tbody>
+                            </table>
+                            <p id="paragrafoMensagemRegistrosDiariosBemSetor"></p>
+                        </div>
+                    </div>                    
                 </div>               
             </div>
         </div>
@@ -241,6 +261,7 @@
        getRegistrosDiariosBem()
        getRegistrosDiariosPorSetor()
        getRegistrosDiariosNaoBemPorSetor()
+       getRegistrosDiariosBemPorSetor()
     }
 
     async function getRegistrosDiarios() {
@@ -296,7 +317,7 @@
             let data = new Date(dado[1]);
             linhasTabela +=
                 '<tr>' +
-                    '<td>' + data.toLocaleDateString() + '</td>' +
+                    '<td>'  + data.getUTCDate() + '/' + (data.getUTCMonth() + 1) + '/' + data.getUTCFullYear() +  '</td>' +
                     '<td>' + dado[0] + '</td>' +
                 '</tr>';
         }
@@ -333,6 +354,21 @@
         fillTableRegistrosDiariosNaoBemPorSetorGenerico(registros, corpoTabelaRegistrosDiariosNaoBemSetor)
     }
 
+    async function getRegistrosDiariosBemPorSetor() {
+        const paragrafoMensagemRegistrosDiariosBemSetor = document.querySelector('#paragrafoMensagemRegistrosDiariosBemSetor');
+        let URL = `/api/relatorios/registros/bem/setor/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiariosBemPorSetor(jsonResponse))
+    }
+
+    function fillTableRegistrosDiariosBemPorSetor( registros ) {        
+        const corpoTabelaRegistrosDiariosBemSetor = document.querySelector('#corpoTabelaRegistrosDiariosBemSetor');
+        fillTableRegistrosDiariosNaoBemPorSetorGenerico(registros, corpoTabelaRegistrosDiariosBemSetor)
+    }
+
     function fillTableRegistrosDiariosNaoBemPorSetorGenerico( registros, corpoTabela ) {
         let linhasTabela = '';
         let n = registros.length;
@@ -341,7 +377,7 @@
             let data = new Date(dado[2]);
             linhasTabela +=
                 '<tr>' +
-                    '<td>' + data.toLocaleDateString() + '</td>' +
+                    '<td>'  + data.getUTCDate() + '/' + (data.getUTCMonth() + 1) + '/' + data.getUTCFullYear() +  '</td>' +
                     '<td>' + dado[0] + '</td>' +
                     '<td>' + dado[1] + '</td>' +
                 '</tr>';
