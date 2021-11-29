@@ -86,7 +86,10 @@
 
 <script>
     $(document).ready( function () {
-        $('#membros').DataTable();
+        $('#membros').DataTable({
+            searching: false,
+            paging: false
+        });
     } );
 
     const corpoTabela = document.querySelector('#corpoTabelaUsuario');
