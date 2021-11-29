@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Index</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/script.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="tracker.html">COVID TRACKER</a>
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li><a href="tracker.html" class="nav-link text-white">Início</a></li>
+                    <li><a href="historico.html" class="nav-link text-white">Histórico</a></li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="membros.html">Cadastro de Membros</a>
+                            <a class="dropdown-item" href="sintomas.html">Cadastro de Sintomas</a>
+                            <a class="dropdown-item" href="relatorios.html">Relatórios</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="index.html">Sair</a>
+                        </div>
+                    </li>
+                </ul>
+        </div>
+
+    </nav>
+
+    <body>
+        <header class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">                    
+                    <h3><b>Relatórios</b></h3>                    
+                    <hr>
+                </div>
+                <div class="col-md-9">                    
+                    <form>
+                        <div class="row">
+                            <div class="col form-group">
+                              <label for="data-inicio">Data Início</label>
+                              <input name="data-inicio" type="date" class="form-control mx-0" placeholder="First name" id="data-inicio" value="2021-10-01">
+                            </div>
+                            <div class="col form-group">
+                              <label for="data-fim">Data Fim</label>
+                              <input name="data-fim" type="date" class="form-control mx-0" placeholder="Last name" id="data-fim">
+                            </div>
+                            <div class="col-2 form-group">
+                                <label class="d-block" for="filtrar-registros">&nbsp;</label>
+                                <button type="button" class="btn-primary mt-2" onclick="init()" id="filtrar-registros">Filtrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Registros Diários</h3>
+                </div>
+                <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                    <table class="table table-striped table-hove dataTableRegistros">
+                        <thead>
+                            <tr>
+                                <th scope="col">DIA</th>
+                                <th scope="col">QUANTIDADE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaRegistrosDiarios"></tbody>
+                    </table>
+                    <p id="paragrafoMensagemRegistrosDiarios"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column mt-2">
+            <div class="row justify-content-between">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Registros Diários - Não Bem</h3>
+                        </div>
+                        <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                            <table class="table table-striped table-hove dataTableRegistros">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">DIA</th>
+                                        <th scope="col">QUANTIDADE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTabelaRegistrosDiariosNaoBem"></tbody>
+                            </table>
+                            <p id="paragrafoMensagemRegistrosDiariosNaoBem"></p>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Registros Diários - Bem</h3>
+                        </div>
+                        <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                            <table class="table table-striped table-hove dataTableRegistros">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">DIA</th>
+                                        <th scope="col">QUANTIDADE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTabelaRegistrosDiariosBem"></tbody>
+                            </table>
+                            <p id="paragrafoMensagemRegistrosDiariosBem"></p>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Registros Diários - Por Setor</h3>
+                </div>
+                <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                    <table class="table table-striped table-hove dataTableRegistros">
+                        <thead>
+                            <tr>
+                                <th scope="col">DIA</th>
+                                <th scope="col">SETOR</th>
+                                <th scope="col">QUANTIDADE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaRegistrosDiariosPorSetor"></tbody>
+                    </table>
+                    <p id="paragrafoMensagemRegistrosDiariosPorSetor"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-flex w-100 h-100 p-3 mx-auto justify-content-center flex-column mt-2">
+            <div class="row justify-content-between">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Registros Diários - Não Bem - Setor</h3>
+                        </div>
+                        <div class="col-md-12 pt-5 mx-auto clean-table w-100">
+                            <table class="table table-striped table-hove dataTableRegistros">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">DIA</th>
+                                        <th scope="col">QUANTIDADE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTabelaRegistrosDiariosNaoBemSetor"></tbody>
+                            </table>
+                            <p id="paragrafoMensagemRegistrosDiariosNaoBemSetor"></p>
+                        </div>
+                    </div>                    
+                </div>               
+            </div>
+        </div>
+
+        
+    </body>
+
+</html>
+
+<script>
+    $(document).ready( function () {
+        $('.dataTableRegistros').DataTable();
+    } );
+
+    function init(){
+       getRegistrosDiarios();
+       getRegistrosDiariosNaoBem()
+       getRegistrosDiariosBem()
+       getRegistrosDiariosPorSetor()
+       getRegistrosDiariosNaoBemPorSetor()
+    }
+
+    async function getRegistrosDiarios() {
+        const paragrafoMensagemRegistrosDiarios = document.querySelector('#paragrafoMensagemRegistrosDiarios');
+        let URL = `/api/relatorios/registros/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiarios(jsonResponse))
+    }
+
+    function fillTableRegistrosDiarios( registros ) {
+        const corpoTabelaRegistrosDiarios = document.querySelector('#corpoTabelaRegistrosDiarios');
+        fillTableRegistrosDiariosGenerico(registros, corpoTabelaRegistrosDiarios)
+    }
+    
+    async function getRegistrosDiariosNaoBem() {
+        const paragrafoMensagemRegistrosDiariosNaoBem = document.querySelector('#paragrafoMensagemRegistrosDiariosNaoBem');
+        let URL = `/api/relatorios/registros/doentes/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiariosNaoBem(jsonResponse))
+    }
+
+    function fillTableRegistrosDiariosNaoBem( registros ) {
+        const corpoTabelaRegistrosDiariosNaoBem = document.querySelector('#corpoTabelaRegistrosDiariosNaoBem');
+        fillTableRegistrosDiariosGenerico(registros, corpoTabelaRegistrosDiariosNaoBem)
+    }
+
+    async function getRegistrosDiariosBem() {
+        const paragrafoMensagemRegistrosDiariosBem = document.querySelector('#paragrafoMensagemRegistrosDiariosBem');
+        let URL = `/api/relatorios/registros/bem/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiariosBem(jsonResponse))
+    }
+
+    function fillTableRegistrosDiariosBem( registros ) {
+        const corpoTabelaRegistrosDiariosBem = document.querySelector('#corpoTabelaRegistrosDiariosBem');
+        fillTableRegistrosDiariosGenerico(registros, corpoTabelaRegistrosDiariosBem)
+    }
+
+    function fillTableRegistrosDiariosGenerico(registros, corpoTabela){
+        let linhasTabela = '';
+        let n = registros.length;
+        for (let i = 0; i < n; i++) {
+            let dado = registros[i];
+            let data = new Date(dado[1]);
+            linhasTabela +=
+                '<tr>' +
+                    '<td>' + data.toLocaleDateString() + '</td>' +
+                    '<td>' + dado[0] + '</td>' +
+                '</tr>';
+        }
+        corpoTabela.innerHTML = linhasTabela;
+    }
+
+    async function getRegistrosDiariosPorSetor() {
+        const paragrafoMensagemRegistrosDiariosPorSetor = document.querySelector('#paragrafoMensagemRegistrosDiariosPorSetor');
+        let URL = `/api/relatorios/registros/setor/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiariosPorSetor(jsonResponse))
+    }
+
+    function fillTableRegistrosDiariosPorSetor( registros ) {
+        const corpoTabelaRegistrosDiariosPorSetor = document.querySelector('#corpoTabelaRegistrosDiariosPorSetor');
+        fillTableRegistrosDiariosNaoBemPorSetorGenerico(registros, corpoTabelaRegistrosDiariosPorSetor)
+    }
+
+    async function getRegistrosDiariosNaoBemPorSetor() {
+        const paragrafoMensagemRegistrosDiariosNaoBemSetor = document.querySelector('#paragrafoMensagemRegistrosDiariosNaoBemSetor');
+        let URL = `/api/relatorios/registros/doente/setor/qtd`;
+        URL = addFilterDateURL(URL)
+        fetch(URL)
+            .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;})
+            .then(resposta => resposta.json())
+            .then(jsonResponse => fillTableRegistrosDiariosNaoBemPorSetor(jsonResponse))
+    }
+
+    function fillTableRegistrosDiariosNaoBemPorSetor( registros ) {        
+        const corpoTabelaRegistrosDiariosNaoBemSetor = document.querySelector('#corpoTabelaRegistrosDiariosNaoBemSetor');
+        fillTableRegistrosDiariosNaoBemPorSetorGenerico(registros, corpoTabelaRegistrosDiariosNaoBemSetor)
+    }
+
+    function fillTableRegistrosDiariosNaoBemPorSetorGenerico( registros, corpoTabela ) {
+        let linhasTabela = '';
+        let n = registros.length;
+        for (let i = 0; i < n; i++) {
+            let dado = registros[i];
+            let data = new Date(dado[2]);
+            linhasTabela +=
+                '<tr>' +
+                    '<td>' + data.toLocaleDateString() + '</td>' +
+                    '<td>' + dado[0] + '</td>' +
+                    '<td>' + dado[1] + '</td>' +
+                '</tr>';
+        }
+        corpoTabela.innerHTML = linhasTabela;
+    }
+
+    function addFilterDateURL(URL){
+        const dateInicio = document.querySelector('#data-inicio');
+        const dateFim = document.querySelector('#data-fim');
+        if(dateInicio.value && !dateFim.value){
+            URL += '?start='+dateInicio.value
+        } else {
+            URL += '?start='+dateInicio.value+"&end="+dateFim.value
+        }
+        return URL;
+    }
+    
+    init();
+</script>

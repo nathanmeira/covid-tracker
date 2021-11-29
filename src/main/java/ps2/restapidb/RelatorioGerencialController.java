@@ -91,6 +91,9 @@ public class RelatorioGerencialController {
         }      
       
         Optional<List<Object>> s = this.estadoSaudeRepo.getQtdRegistrosByEstadoSaude(dateStart, dateEnd, true);
+        if(!s.isPresent()){
+            return new ArrayList<>();
+        }
         return s.get();
     }
     
