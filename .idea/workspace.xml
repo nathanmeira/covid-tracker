@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="wip: historico" />
+    <list default="true" id="ce2cd238-cc92-4bae-a1ed-b0038c522b57" name="Default Changelist" comment="fix: app.prop">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/relatorios.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/relatorios.html" afterDir="false" />
+    </list>
     <list id="496fb3b2-cbc9-4bc2-9e4e-f61744c33fdb" name="Revert &quot;Front end updated&quot;" comment="Revert &quot;Front end updated&quot;&#10;&#10;This reverts commit 1a759005" />
     <list id="fca3c89e-c930-4e83-8573-d21336c8d354" name="Revert &quot;heroku fix&quot;" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
     <list id="7136081a-886d-4110-b5f2-43b1779a5818" name="Revert &quot;heroku fix&quot;-2" comment="Revert &quot;heroku fix&quot;&#10;&#10;This reverts commit 8e034404" />
@@ -260,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637980666722</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix: app.prop">
+      <created>1638146834144</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638146834144</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,6 +325,7 @@
     <MESSAGE value="wip: mock do form de cadastro de sintomas" />
     <MESSAGE value="wip: form cadastro estado de saude dinamico" />
     <MESSAGE value="wip: historico" />
-    <option name="LAST_COMMIT_MESSAGE" value="wip: historico" />
+    <MESSAGE value="fix: app.prop" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: app.prop" />
   </component>
 </project>
